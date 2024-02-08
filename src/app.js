@@ -12,6 +12,8 @@ import viewRoutes from './routes/viewsRoutes.js'
 import MongoStore from "connect-mongo";
 import session from "express-session";
 import sessionRoutes from "./routes/session.routes.js";
+import passport from "passport";
+import initializePassport from "./config/passport.config.js";
 
 const PORT = 8080;
 const app = express();
@@ -34,7 +36,12 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
+
 mongoose.connect('mongodb+srv://lucianomorandi:Pilar2805@coderhouse.lupycvz.mongodb.net/coder');
+
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 const hbs = handlebars.create({
   runtimeOptions: {

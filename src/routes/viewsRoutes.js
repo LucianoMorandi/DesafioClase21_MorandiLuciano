@@ -1,11 +1,15 @@
-import express from "express"
+// import express from "express"
 //import { ProductManager } from "../dao/managerFS/ProductManager.js";
+import { Router } from "express"
 import { ProductMongoManager } from "../dao/managerDB/ProductMongoManager.js"
 import { checkAuth, checkingExistingUser } from "../middlewares/auth.js"
 
-const viewRoutes = express.Router()
+// const viewRoutes = express.Router()
 //const path="./src/json/productos.json"
 //const productManager = new ProductManager(path);
+
+const viewRoutes = Router();
+
 const productManager=new ProductMongoManager()
 
 viewRoutes.get("/", checkAuth, async (req, res) => {
@@ -39,6 +43,18 @@ viewRoutes.get('/login', checkingExistingUser, (req, res) => {
 
 viewRoutes.get('/register', checkingExistingUser, (req, res) => {
   res.render('register');
+});
+
+viewRoutes.get('/restore-password', checkingExistingUser, (req, res) => {
+  res.render('restore-password');
+});
+
+viewRoutes.get('/faillogin', (req, res) => {
+  res.render('faillogin')
+});
+
+viewRoutes.get('/failregister', (req, res) => {
+  res.render('failregister')
 });
 
 export default viewRoutes
